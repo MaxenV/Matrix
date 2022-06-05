@@ -49,8 +49,6 @@ class Matrix:
                 if type(row) == list and num_cols != len(row):
                     return False
                 for num in row:
-
-                    print(type(num))
                     if not (type(num) == int or type(num) == float):
                         return False
         else:
@@ -66,3 +64,18 @@ class Matrix:
     def check_if_can_multiply(self, mtx):
         return self.rows == mtx.columns
 
+    def add(self, ad_matrix):
+        if not self.check_if_similar(ad_matrix):
+            print("You can add only similar matrices")
+        else:
+            for row in range(self.rows):
+                for col in range(self.columns):
+                    self.matrix[row][col] += ad_matrix.matrix[row][col]
+
+    def subtract(self, ad_matrix):
+        if not self.check_if_similar(ad_matrix):
+            print("You can subtract only similar matrices")
+        else:
+            for row in range(self.rows):
+                for col in range(self.columns):
+                    self.matrix[row][col] -= ad_matrix.matrix[row][col]
