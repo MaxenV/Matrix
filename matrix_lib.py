@@ -79,3 +79,20 @@ class Matrix:
             for row in range(self.rows):
                 for col in range(self.columns):
                     self.matrix[row][col] -= ad_matrix.matrix[row][col]
+
+    def transpose(self):
+        rows = len(self.matrix)
+        new_rows = self.rows
+
+        for x in range(self.rows):
+            for y in range(x, self.columns):
+                if y < new_rows:
+                    self.matrix[y].append(self.matrix[x].pop(0))
+                    if x != y and y < rows:
+                        self.matrix[x].append(self.matrix[y].pop(0))
+                else:
+                    new_rows += 1
+                    self.matrix.append([self.matrix[x].pop(0)])
+
+        self.columns = self.rows
+        self.rows = new_rows
