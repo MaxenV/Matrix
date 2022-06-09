@@ -94,5 +94,9 @@ class Matrix:
                     new_rows += 1
                     self.matrix.append([self.matrix[x].pop(0)])
 
+        for x in range(self.columns, self.rows):
+            for z in range(self.columns):
+                self.matrix[z].append(self.matrix[x].pop(0))
+
         self.columns = self.rows
         self.rows = new_rows
