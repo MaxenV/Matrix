@@ -101,3 +101,41 @@ def check_if_correct(mtx):
         return False
     return True
 
+def determinant2x2(mtx):
+    if len(mtx.matrix) == 2 and len(mtx.matrix[0]) == 2:
+        return mtx.matrix[0][0] * mtx.matrix[1][1] - mtx.matrix[1][0] * mtx.matrix[0][1]
+    else:
+        print("It is not 2x2 determinant")
+
+
+def determinant3x3(mtx):
+    if len(mtx.matrix) == 3 and len(mtx.matrix[0]) == 3:
+        plus = mtx.matrix[0][0] * mtx.matrix[1][1] * mtx.matrix[2][2]
+        plus += mtx.matrix[0][1] * mtx.matrix[1][2] * mtx.matrix[2][0]
+        plus += mtx.matrix[0][2] * mtx.matrix[1][0] * mtx.matrix[2][1]
+
+        minus = mtx.matrix[2][0] * mtx.matrix[1][1] * mtx.matrix[0][2]
+        minus += mtx.matrix[2][1] * mtx.matrix[1][2] * mtx.matrix[0][0]
+        minus += mtx.matrix[2][2] * mtx.matrix[1][0] * mtx.matrix[0][1]
+        return plus - minus
+    else:
+        print("It is not 3x3 determinant")
+
+
+def un_op_determinant(mtx):
+    if check_if_correct(mtx.matrix):
+        if len(mtx.matrix) == 1:
+            return mtx.matrix[0][0]
+        elif len(mtx.matrix) == 2:
+            return determinant2x2(mtx)
+        elif len(mtx.matrix) == 3:
+            return determinant3x3(mtx)
+        else:
+            det = 0
+            for count, value in enumerate(mtx.matrix[0]):
+                new_mtx = Matrix([[vl for ct, vl in enumerate(row) if ct != count]
+                                  for cc, row in enumerate(mtx.matrix) if cc != 0])
+                det += pow(-1, count) * value * un_op_determinant(new_mtx)
+            return det
+    else:
+        print("Can't show determinant from not square matrix")
