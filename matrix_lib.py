@@ -87,7 +87,6 @@ class Matrix:
         self.columns = self.rows
         self.rows = new_rows
 
-
 def check_if_correct(mtx):
     if type(mtx[0]) == list:
         num_cols = len(mtx[0])
@@ -139,3 +138,22 @@ def un_op_determinant(mtx):
             return det
     else:
         print("Can't show determinant from not square matrix")
+
+
+def determinant(mtx):
+    new_matrix = mtx.matrix
+
+    for row_number, row in enumerate(new_matrix):
+        rn_value = row[row_number]
+
+        for num2, row2 in enumerate(new_matrix[row_number+1:]):
+            multiplier = row2[row_number] * (rn_value**(-1))
+
+            for index, value in enumerate(row):
+                row2[index] = row2[index] - multiplier * row[index]
+
+    det_value = 1
+    for index, row in enumerate(new_matrix):
+        det_value = det_value*row[index]
+
+    return round(det_value, 5)
