@@ -10,7 +10,7 @@ class Matrix:
                     self.columns = len(self.matrix[0])
                     self.rows = len(self.matrix)
                 else:
-                    print("Given matrix in invalid")
+                    raise TypeError("Given matrix in invalid")
             elif type(mtx[0]) == int:
                 if len(mtx) > 1 and type(mtx[1]) == int:
                     self.columns = mtx[0]
@@ -87,6 +87,7 @@ class Matrix:
         self.columns = self.rows
         self.rows = new_rows
 
+
 def check_if_correct(mtx):
     if type(mtx[0]) == list:
         num_cols = len(mtx[0])
@@ -99,6 +100,7 @@ def check_if_correct(mtx):
     else:
         return False
     return True
+
 
 def determinant2x2(mtx):
     if len(mtx.matrix) == 2 and len(mtx.matrix[0]) == 2:
@@ -157,3 +159,59 @@ def determinant(mtx):
         det_value = det_value*row[index]
 
     return round(det_value, 5)
+
+
+def make_identity_matrix(size):
+    tab = [[0 for _ in range(size)] for _ in range(size)]
+    for index in range(size):
+        tab[index][index] = 1
+    return Matrix(tab)
+
+
+def deep_matrix_reverse(mtx_table):
+    for row in mtx_table:
+        row.reverse()
+    mtx_table.reverse();
+
+    return mtx_table
+
+
+def inverse(mtx):
+    if not mtx.check_if_square():
+        raise Exception('inverse', 'Not square matrix')
+    else:
+        new_matrix = mtx.matrix
+        identity_matrix = make_identity_matrix(mtx.rows).matrix
+
+        for row_number, row in enumerate(new_matrix):
+            rn_value = row[row_number]
+
+            for ins_row_no, row2 in enumerate(new_matrix[row_number+1:]):
+                multiplier = row2[row_number] * (rn_value**(-1))
+
+                for index, value in enumerate(row):
+                    row2[index] = round(row2[index] - multiplier * row[index], 8)
+                    identity_matrix[row_number+ins_row_no+1][index] -= multiplier * identity_matrix[row_number][index]
+
+        new_matrix = deep_matrix_reverse(new_matrix)
+        identity_matrix = deep_matrix_reverse(identity_matrix)
+
+        for row_number, row in enumerate(new_matrix):
+            rn_value = row[row_number]
+
+            for ins_row_no, row2 in enumerate(new_matrix[row_number + 1:]):
+                multiplier = row2[row_number] * (rn_value ** (-1))
+
+                for index, value in enumerate(row):
+                    row2[index] = round(row2[index] - multiplier * row[index], 8)
+                    identity_matrix[row_number+ins_row_no+1][index] -= multiplier * identity_matrix[row_number][index]
+
+        new_matrix = deep_matrix_reverse(new_matrix)
+        identity_matrix = deep_matrix_reverse(identity_matrix)
+        for r_index in range(mtx.rows):
+            divider = new_matrix[r_index][r_index]
+            for v_index in range(mtx.rows):
+                identity_matrix[r_index][v_index] = round(identity_matrix[r_index][v_index] / divider, 7)
+                new_matrix[r_index][v_index] = round(new_matrix[r_index][v_index] / divider, 7)
+
+        return Matrix(identity_matrix)
