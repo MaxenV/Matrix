@@ -66,6 +66,21 @@ class Matrix:
                 for col in range(self.columns):
                     self.matrix[row][col] -= ad_matrix.matrix[row][col]
 
+    def multipy(self, ad_matrix):
+        if not self.check_if_can_multiply(ad_matrix):
+            print("You can't multiply this matrices")
+        else:
+            new_table_mtx = [[] for _ in range(self.rows)]
+
+            for id_col, row_multiplicand in enumerate(self.matrix):
+                for id_new, row_multiplier in enumerate(ad_matrix.matrix):
+                    cell_sum = 0
+                    for id_row_col in range(self.rows):
+                        cell_sum += row_multiplicand[id_row_col] * ad_matrix.matrix[id_row_col][id_new]
+                    new_table_mtx[id_col].append(cell_sum)
+
+            self.matrix = new_table_mtx
+
     def transpose(self):
         rows = len(self.matrix)
         new_rows = self.rows
@@ -171,7 +186,7 @@ def make_identity_matrix(size):
 def deep_matrix_reverse(mtx_table):
     for row in mtx_table:
         row.reverse()
-    mtx_table.reverse();
+    mtx_table.reverse()
 
     return mtx_table
 
