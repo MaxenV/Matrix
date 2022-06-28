@@ -230,3 +230,43 @@ def inverse(mtx):
                 new_matrix[r_index][v_index] = round(new_matrix[r_index][v_index] / divider, 7)
 
         return Matrix(identity_matrix)
+
+
+def add(ad_matrix, ad_matrix2):
+    if not ad_matrix.check_if_similar(ad_matrix2):
+        print("You can add only similar matrices")
+    else:
+        result_matrix = Matrix([[]for _ in range(ad_matrix.rows)])
+        for row in range(ad_matrix.rows):
+            for col in range(ad_matrix.columns):
+                result_matrix.matrix.append(ad_matrix.matrix[row][col] + ad_matrix2.matrix[row][col])
+
+        return result_matrix
+
+
+def subtract(ad_matrix, ad_matrix2):
+    if not ad_matrix.check_if_similar(ad_matrix2):
+        print("You can subtract only similar matrices")
+    else:
+        result_matrix = Matrix([[]for _ in range(ad_matrix.rows)])
+        for row in range(ad_matrix.rows):
+            for col in range(ad_matrix.columns):
+                result_matrix.matrix.append(ad_matrix.matrix[row][col] - ad_matrix2.matrix[row][col])
+
+        return result_matrix
+
+
+def multipy(ad_matrix, ad_matrix2):
+    if not ad_matrix.check_if_can_multiply(ad_matrix2):
+        print("You can't multiply this matrices")
+    else:
+        new_table_mtx = [[] for _ in range(ad_matrix.rows)]
+
+        for id_col, row_multiplicand in enumerate(ad_matrix.matrix):
+            for id_new, row_multiplier in enumerate(ad_matrix2.matrix):
+                cell_sum = 0
+                for id_row_col in range(ad_matrix.rows):
+                    cell_sum += row_multiplicand[id_row_col] * ad_matrix2.matrix[id_row_col][id_new]
+                new_table_mtx[id_col].append(cell_sum)
+
+        return Matrix(new_table_mtx)

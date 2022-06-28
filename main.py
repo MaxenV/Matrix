@@ -51,10 +51,11 @@ table3 = [[7, 8, 5], [2, 7, 3], [4, 4, 3]]
 mtx = Matrix(table2)
 mtx2 = Matrix(table3)
 mtx.show_matrix()
+print()
+multipy(mtx, mtx2).show_matrix()
 mtx.multipy(mtx2)
-
+print()
 mtx.show_matrix()
-
 # mt2 = inverse(mtx)
 #
 # mtx.show_matrix()
