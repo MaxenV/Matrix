@@ -50,6 +50,13 @@ class Matrix:
     def check_if_can_multiply(self, mtx):
         return self.rows == mtx.columns
 
+    def update_rows_cols_num(self):
+        if check_if_correct(self.matrix):
+            self.rows = len(self.matrix)
+            self.columns = len(self.matrix[0])
+        else:
+            print("Matrix is incorrect")
+
     def add(self, ad_matrix):
         if not self.check_if_similar(ad_matrix):
             print("You can add only similar matrices")
