@@ -87,6 +87,7 @@ class Matrix:
                     new_table_mtx[id_col].append(cell_sum)
 
             self.matrix = new_table_mtx
+            self.update_rows_cols_num()
 
     def transpose(self):
         rows = len(self.matrix)
@@ -106,8 +107,7 @@ class Matrix:
             for z in range(self.columns):
                 self.matrix[z].append(self.matrix[x].pop(0))
 
-        self.columns = self.rows
-        self.rows = new_rows
+        self.update_rows_cols_num()
 
 
 def check_if_correct(mtx):
