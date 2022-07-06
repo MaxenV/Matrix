@@ -29,11 +29,21 @@ class Matrix:
             self.matrix = list()
 
     def fill_matrix_asks_user(self):
-        return [[int(input(f"Type number on {w}{c}: ")) for c in range(1, self.columns+1)]
-                for w in range(1, self.rows+1)]
+        return [
+            [
+                int(input(f"Type number on {w}{c}: "))
+                for c in range(1, self.columns+1)
+            ]
+            for w in range(1, self.rows+1)
+        ]
 
     def fill_matrix_random(self, minimum, maximum):
-        return [[randint(minimum, maximum) for _ in range(1, self.columns+1)] for _ in range(1, self.rows+1)]
+        return [
+            [
+                randint(minimum, maximum) for _ in range(1, self.columns+1)
+            ]
+            for _ in range(1, self.rows+1)
+        ]
 
     def show_matrix(self):
         for row in self.matrix:
@@ -83,7 +93,8 @@ class Matrix:
                 for id_new, row_multiplier in enumerate(ad_matrix.matrix):
                     cell_sum = 0
                     for id_row_col in range(self.rows):
-                        cell_sum += row_multiplicand[id_row_col] * ad_matrix.matrix[id_row_col][id_new]
+                        cell_sum += row_multiplicand[id_row_col] * \
+                            ad_matrix.matrix[id_row_col][id_new]
                     new_table_mtx[id_col].append(cell_sum)
 
             self.matrix = new_table_mtx
@@ -126,7 +137,11 @@ def check_if_correct(mtx):
 
 def determinant2x2(mtx):
     if len(mtx.matrix) == 2 and len(mtx.matrix[0]) == 2:
-        return mtx.matrix[0][0] * mtx.matrix[1][1] - mtx.matrix[1][0] * mtx.matrix[0][1]
+        return (
+            mtx.matrix[0][0] * mtx.matrix[1][1] -
+            mtx.matrix[1][0] * mtx.matrix[0][1]
+        )
+
     else:
         print("It is not 2x2 determinant")
 
@@ -156,8 +171,12 @@ def un_op_determinant(mtx):
         else:
             det = 0
             for count, value in enumerate(mtx.matrix[0]):
-                new_mtx = Matrix([[vl for ct, vl in enumerate(row) if ct != count]
-                                  for cc, row in enumerate(mtx.matrix) if cc != 0])
+                new_mtx = Matrix(
+                    [
+                        [vl for ct, vl in enumerate(row) if ct != count]
+                        for cc, row in enumerate(mtx.matrix) if cc != 0
+                    ]
+                )
                 det += pow(-1, count) * value * un_op_determinant(new_mtx)
             return det
     else:
@@ -212,8 +231,10 @@ def inverse(mtx):
                 multiplier = row2[row_number] * (rn_value**(-1))
 
                 for index, value in enumerate(row):
-                    row2[index] = round(row2[index] - multiplier * row[index], 8)
-                    identity_matrix[row_number+ins_row_no+1][index] -= multiplier * identity_matrix[row_number][index]
+                    row2[index] = round(
+                        row2[index] - multiplier * row[index], 8)
+                    identity_matrix[row_number+ins_row_no + 1][index] -= \
+                        multiplier * identity_matrix[row_number][index]
 
         new_matrix = deep_matrix_reverse(new_matrix)
         identity_matrix = deep_matrix_reverse(identity_matrix)
@@ -225,16 +246,20 @@ def inverse(mtx):
                 multiplier = row2[row_number] * (rn_value ** (-1))
 
                 for index, value in enumerate(row):
-                    row2[index] = round(row2[index] - multiplier * row[index], 8)
-                    identity_matrix[row_number+ins_row_no+1][index] -= multiplier * identity_matrix[row_number][index]
+                    row2[index] = round(
+                        row2[index] - multiplier * row[index], 8)
+                    identity_matrix[row_number+ins_row_no + 1][index] -= \
+                        multiplier * identity_matrix[row_number][index]
 
         new_matrix = deep_matrix_reverse(new_matrix)
         identity_matrix = deep_matrix_reverse(identity_matrix)
         for r_index in range(mtx.rows):
             divider = new_matrix[r_index][r_index]
             for v_index in range(mtx.rows):
-                identity_matrix[r_index][v_index] = round(identity_matrix[r_index][v_index] / divider, 7)
-                new_matrix[r_index][v_index] = round(new_matrix[r_index][v_index] / divider, 7)
+                identity_matrix[r_index][v_index] = round(
+                    identity_matrix[r_index][v_index] / divider, 7)
+                new_matrix[r_index][v_index] = round(
+                    new_matrix[r_index][v_index] / divider, 7)
 
         return Matrix(identity_matrix)
 
@@ -246,7 +271,8 @@ def add(ad_matrix, ad_matrix2):
         result_matrix = Matrix([[]for _ in range(ad_matrix.rows)])
         for row in range(ad_matrix.rows):
             for col in range(ad_matrix.columns):
-                result_matrix.matrix.append(ad_matrix.matrix[row][col] + ad_matrix2.matrix[row][col])
+                result_matrix.matrix.append(
+                    ad_matrix.matrix[row][col] + ad_matrix2.matrix[row][col])
 
         return result_matrix
 
@@ -258,7 +284,8 @@ def subtract(ad_matrix, ad_matrix2):
         result_matrix = Matrix([[]for _ in range(ad_matrix.rows)])
         for row in range(ad_matrix.rows):
             for col in range(ad_matrix.columns):
-                result_matrix.matrix.append(ad_matrix.matrix[row][col] - ad_matrix2.matrix[row][col])
+                result_matrix.matrix.append(
+                    ad_matrix.matrix[row][col] - ad_matrix2.matrix[row][col])
 
         return result_matrix
 
@@ -273,7 +300,8 @@ def multipy(ad_matrix, ad_matrix2):
             for id_new, row_multiplier in enumerate(ad_matrix2.matrix):
                 cell_sum = 0
                 for id_row_col in range(ad_matrix.rows):
-                    cell_sum += row_multiplicand[id_row_col] * ad_matrix2.matrix[id_row_col][id_new]
+                    cell_sum += row_multiplicand[id_row_col] * \
+                        ad_matrix2.matrix[id_row_col][id_new]
                 new_table_mtx[id_col].append(cell_sum)
 
         return Matrix(new_table_mtx)

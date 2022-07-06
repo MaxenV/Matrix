@@ -2,3 +2,7 @@ __pycache__
 __pycache__/*
 .idea
 .idea/*
+.pytest_cashe
+.pytest_cashe/*
+.vscode
+.vscode/*
