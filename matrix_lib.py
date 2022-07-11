@@ -127,14 +127,14 @@ def check_if_correct(mtx):
     if type(mtx[0]) == list:
         num_cols = len(mtx[0])
         for row in mtx:
-            if type(row) == list and num_cols != len(row):
+            if type(row) != list or num_cols != len(row):
                 return False
             for num in row:
                 if not (type(num) == int or type(num) == float):
                     return False
+        return True
     else:
         return False
-    return True
 
 
 def determinant2x2(mtx):
