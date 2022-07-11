@@ -12,14 +12,16 @@ class Matrix:
                 else:
                     raise TypeError("Given matrix in invalid")
             elif type(mtx[0]) == int:
-                if len(mtx) > 1 and type(mtx[1]) == int:
+                if len(mtx) == 2 and type(mtx[1]) == int:
                     self.columns = mtx[0]
                     self.rows = mtx[1]
                     self.matrix = self.fill_matrix_random(1, 50)
-                else:
+                elif len(mtx) == 1:
                     self.columns = mtx[0]
                     self.rows = mtx[0]
                     self.matrix = self.fill_matrix_random(1, 50)
+                else:
+                    raise TypeError("Takes max 2 arguments")
             else:
                 raise TypeError("Required list or int")
 
